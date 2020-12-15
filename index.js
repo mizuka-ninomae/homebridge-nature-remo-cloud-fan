@@ -1,5 +1,5 @@
 var Service, Characteristic;
-const { exec } = require('child_process');
+var exec = require("child_process").exec;
 
 module.exports = function(homebridge){
   Service        = homebridge.hap.Service;
@@ -50,8 +50,8 @@ FanAccessory.prototype.getServices = function() {
     })
 //    .on('get', this.getSpeed.bind(this))
     .on('set', this.setSpeed.bind(this))
-  fanService
-    .getCharacteristic(Characteristic.RotationDirection)
+//  fanService
+//    .getCharacteristic(Characteristic.RotationDirection)
 //    .on('get', this.getDirection.bind(this))
 //    .on('set', this.setDirection.bind(this));
 
@@ -61,7 +61,6 @@ FanAccessory.prototype.getServices = function() {
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setOn = function(value, callback) {
   if (this.state.power != value) {
-    this.log('setting power to ' + value);
     this.state.power = value;
     this.setFanState(this.state, callback);
   } 
@@ -73,7 +72,6 @@ FanAccessory.prototype.setOn = function(value, callback) {
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setSpeed = function(value, callback) {
   if (this.state.speed != value) {
-    this.log('setting speed to ' + value);
     this.state.speed = value;
     this.setFanState(this.state, callback);
   } 
@@ -86,27 +84,27 @@ FanAccessory.prototype.setSpeed = function(value, callback) {
 FanAccessory.prototype.setFanState = function(state, callback) {
   var cmd;
   if (state.power) {
-    if      (state.speed = 99) {
+    if      (state.speed =  99) {
       cmd = this.high_cmd;
-      this.log("Power:ON FANSpeed:HIGH");
+      this.log('Power: ' + state.power + '  FANSpeed: HIGH(' + state.speed + ')');
     }
-    else if (state.speed = 66) {
+    else if (state.speed =  66) {
       cmd = this.middle_cmd;
-      this.log("Power:ON FANSpeed:MIDDLE");
+      this.log('Power: ' + state.power + '  FANSpeed: MIDDLE(' + state.speed + ')');
     }
-    else if (state.speed = 33) {
+    else if (state.speed =  33) {
       cmd = this.middle_cmd;
-      this.log("Power:ON FANSpeed:LOW");
+      this.log('Power: ' + state.power + '  FANSpeed: LOW(' + state.speed + ')');
     }
   }
   else {
       cmd = this.off_cmd;
-      this.log("Power:OFF");
+      this.log('Power: ' + state.power);
   }
 
   this.cmdRequest(cmd, function(error, stdout, stderr) {
     if (error) {
-      this.log('Function Failed: %s', stderr);
+      this.log('Function Failed', error);
       callback(error);
     } 
     else {
