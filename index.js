@@ -14,6 +14,10 @@ function FanAccessory(log, config) {
   this.low_cmd         = config["low_cmd"];
   this.off_cmd         = config["off_cmd"];
   this.name            = config["name"];
+  this.state = {
+    power: false,
+    speed: 0,
+  };
 }
 
 //------------------------------------------------------------------------------
