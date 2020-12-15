@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 module.exports = function(homebridge){
   Service        = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-  homebridge.registerAccessory("homebridge-cmd-fan", "FAN", FanAccessory);
+  homebridge.registerAccessory("homebridge-cmd-fan", "cmf-fan", FanAccessory);
 
 function FanAccessory(log, config) {
   this.log             = log;
@@ -12,8 +12,6 @@ function FanAccessory(log, config) {
   this.middle_cmd      = config["middle_cmd"];
   this.low_cmd         = config["low_cmd"];
   this.off_cmd         = config["off_cmd"];
-  this.clockwise_cmd   = config["clockwise_cmd"];
-  this.C_clockwise_cmd = config["c_clockwise_cmd"];
   this.name            = config["name"];
 }
 
