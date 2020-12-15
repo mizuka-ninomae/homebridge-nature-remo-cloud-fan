@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 module.exports = function(homebridge){
   Service        = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-  homebridge.registerAccessory("homebridge-test-mizuka", "FAN", FanAccessory);
+  homebridge.registerAccessory("homebridge-cmd-fan", "FAN", FanAccessory);
 
 function FanAccessory(log, config) {
   this.log             = log;
