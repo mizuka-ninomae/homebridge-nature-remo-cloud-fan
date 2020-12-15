@@ -5,6 +5,7 @@ module.exports = function(homebridge){
   Service        = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
   homebridge.registerAccessory("homebridge-cmd-fan", "cmd-fan", FanAccessory);
+}
 
 function FanAccessory(log, config) {
   this.log             = log;
