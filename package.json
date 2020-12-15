@@ -1,6 +1,6 @@
 {
   "name": "homebridge-cmd-fan",
-  "version": "0.0.0.1",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/mizuka-ninomae/homebridge-cmd-fan.git"
