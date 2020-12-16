@@ -22,6 +22,9 @@ config.json 記入例
     "off_cmd": "/home/pi/homebridge-cmd-fan_sh/off_cmd.sh",
     "clockwise_cmd": "/home/pi/homebridge-cmd-fan_sh/clockwise_cmd.sh",
     "c_clockwise_cmd": "/home/pi/homebridge-cmd-fan_sh/c_clockwise_cmd.sh"
+  },
+  {
+  ～
   }]
 ```
 
