@@ -39,8 +39,8 @@ FanAccessory.prototype.getServices = function() {
 
   fanService
     .getCharacteristic(Characteristic.On)
-//    .on('get', this.getOn.bind(this))
     .on('set', this.setOn.bind(this))
+
   fanService
     .getCharacteristic(Characteristic.RotationSpeed)
     .setProps({
@@ -48,19 +48,14 @@ FanAccessory.prototype.getServices = function() {
        maxValue: 99,
        minStep:  33,
     })
-//    .on('get', this.getSpeed.bind(this))
     .on('set', this.setSpeed.bind(this))
-//  fanService
-//    .getCharacteristic(Characteristic.RotationDirection)
-//    .on('get', this.getDirection.bind(this))
-//    .on('set', this.setDirection.bind(this));
-
   return [fanService];
 }
 
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setOn = function(value, callback) {
   if (this.state.power != value) {
+    this.log('Power Button: ' + value);
     this.state.power = value;
     this.setFanState(this.state, callback);
   } 
@@ -68,13 +63,18 @@ FanAccessory.prototype.setOn = function(value, callback) {
     callback(null);
   }
 }
-
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setSpeed = function(value, callback) {
   if (this.state.speed != value) {
+    if (value == 0) {
+      this.state.power = false;
+    }
+    else {
+      this.state.power = true;
+    }
     this.state.speed = value;
     this.setFanState(this.state, callback);
-  } 
+  }
   else {
     callback(null);
   }
@@ -84,17 +84,17 @@ FanAccessory.prototype.setSpeed = function(value, callback) {
 FanAccessory.prototype.setFanState = function(state, callback) {
   var cmd;
   if (state.power) {
-    if      (state.speed =  99) {
-      cmd = this.high_cmd;
-      this.log('Power: ' + state.power + '  FANSpeed: HIGH(' + state.speed + ')');
+    if      (state.speed == 33) {
+      cmd = this.middle_cmd;
+      this.log('Power: ' + state.power + '  FANSpeed: LOW(' + state.speed + ')');
     }
-    else if (state.speed =  66) {
+    else if (state.speed == 66) {
       cmd = this.middle_cmd;
       this.log('Power: ' + state.power + '  FANSpeed: MIDDLE(' + state.speed + ')');
     }
-    else if (state.speed =  33) {
-      cmd = this.middle_cmd;
-      this.log('Power: ' + state.power + '  FANSpeed: LOW(' + state.speed + ')');
+    else if (state.speed == 99) {
+      cmd = this.high_cmd;
+      this.log('Power: ' + state.power + '  FANSpeed: HIGH(' + state.speed + ')');
     }
   }
   else {
@@ -106,7 +106,7 @@ FanAccessory.prototype.setFanState = function(state, callback) {
     if (error) {
       this.log('Function Failed', error);
       callback(error);
-    } 
+    }
     else {
       this.log('Function Succeeded!');
       callback();
