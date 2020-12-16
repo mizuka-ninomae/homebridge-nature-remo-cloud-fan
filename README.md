@@ -9,7 +9,7 @@ Homebridge：  https：//github.com/nfarina/homebridge
 
 の設定が可能です。
 
-### 3. Create the config.json file
+config.json 記入例
 ```js
 
   "accessories": [{
@@ -23,3 +23,5 @@ Homebridge：  https：//github.com/nfarina/homebridge
     "c_clockwise_cmd": "/home/pi/homebridge-cmd-fan_sh/c_clockwise_cmd.sh"
   }]
 ```
+
+ファイルの場所を指定出来ていれば /home/pi/homebridge-cmd-fan_sh/ でなくて構いません。
