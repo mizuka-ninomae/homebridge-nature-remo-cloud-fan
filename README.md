@@ -1,4 +1,6 @@
 
+#汎用ＦＡＮ用プラグイン(General purpose FAN plugin)
+
 <p align="center">
 
 <img src="https://github.com/homebridge/branding/raw/master/logos/homebridge-wordmark-logo-vertical.png" width="150">
