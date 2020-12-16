@@ -9,6 +9,7 @@ Homebridge：  https：//github.com/nfarina/homebridge
 
 の設定が可能です。
 
+
 config.json 記入例
 ```js
 
