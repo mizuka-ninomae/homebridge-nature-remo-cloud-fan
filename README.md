@@ -1,5 +1,7 @@
 
-#汎用ＦＡＮ用プラグイン(General purpose FAN plugin)
+homubridge用 汎用ＦＡＮプラグイン （eneral purpose FAN plugin）
+
+Homebridge：  https：//github.com/nfarina/homebridge
 
 ＯＦＦ（0%） ⇔ ＬＯＷ（33%） ⇔ ＭＩＤＤＬＥ（66%） ⇔ ＨＩＧＨ（100%）
 
