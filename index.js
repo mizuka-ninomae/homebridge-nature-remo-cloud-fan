@@ -13,6 +13,8 @@ function FanAccessory(log, config) {
   this.middle_cmd      = config["middle_cmd"];
   this.low_cmd         = config["low_cmd"];
   this.off_cmd         = config["off_cmd"];
+  this.clockwise_cmd   = config["clockwise_cmd"];
+  this.c_clockwise_cmd = config["c_clockwise_cmd"];
   this.name            = config["name"];
   this.state = {
     power: false,
@@ -49,6 +51,9 @@ FanAccessory.prototype.getServices = function() {
        minStep:  33,
     })
     .on('set', this.setSpeed.bind(this))
+  fanService
+    .getCharacteristic(Characteristic.RotationDirection)
+    .on('set', this.setDirection.bind(this));
   return [fanService];
 }
 
@@ -81,6 +86,16 @@ FanAccessory.prototype.setSpeed = function(value, callback) {
 }
 
 //------------------------------------------------------------------------------
+FanAccessory.prototype.setDirection = function(value, callback) {
+  if (this.state.direction != value) {
+    this.state.direction = value;
+    this.setFanState2(this.state, callback);
+  } 
+  else {
+    callback(null);
+  }
+}
+//------------------------------------------------------------------------------
 FanAccessory.prototype.setFanState = function(state, callback) {
   var cmd;
   if (state.power) {
@@ -110,7 +125,30 @@ FanAccessory.prototype.setFanState = function(state, callback) {
     else {
       this.log('Function Succeeded!');
       callback();
-      this.log(stdout);
+    }
+  }.bind(this));
+}
+
+//------------------------------------------------------------------------------
+FanAccessory.prototype.setFanState2 = function(state, callback) {
+  var cmd;
+  if (state.direction == 0) {
+      cmd = this.clockwise_cmd;
+      this.log('Direction: CLOCKWISE!');
+  }
+  else {
+      cmd = this.c_clockwise_cmd;
+      this.log('Direction: COUNTER CLOCKWISE!');
+  }
+
+  this.cmdRequest(cmd, function(error, stdout, stderr) {
+    if (error) {
+      this.log('Function Failed', error);
+      callback(error);
+    }
+    else {
+      this.log('Function Succeeded!');
+      callback();
     }
   }.bind(this));
 }
