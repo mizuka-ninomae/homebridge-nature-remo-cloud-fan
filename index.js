@@ -1,21 +1,22 @@
 var Service, Characteristic;
-var exec = require("child_process").exec;
+var request = require('request');
 
 module.exports = function(homebridge){
   Service        = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-  homebridge.registerAccessory("homebridge-cmd-fan", "cmd-fan", FanAccessory);
+  homebridge.registerAccessory("homebridge-nature-remo-cloud-fan", "NatureRemoFan", FanAccessory);
 }
 
 function FanAccessory(log, config) {
-  this.log             = log;
-  this.high_cmd        = config["high_cmd"];
-  this.middle_cmd      = config["middle_cmd"];
-  this.low_cmd         = config["low_cmd"];
-  this.off_cmd         = config["off_cmd"];
-  this.clockwise_cmd   = config["clockwise_cmd"];
-  this.c_clockwise_cmd = config["c_clockwise_cmd"];
-  this.name            = config["name"];
+  this.log                   = log;
+  this.access_tokens         = config["access_tokens"];
+  this.high_signal_ID        = config["high_signal_ID"];
+  this.middle_signal_ID      = config["middle_signal_ID"];
+  this.low_signal_ID         = config["low_signal_ID"];
+  this.off_signal_ID         = config["off_signal_ID"];
+  this.clockwise_signal_ID   = config["clockwise_signal_ID"];
+  this.c_clockwise_signal_ID = config["c_clockwise_signal_ID"];
+  this.name                  = config["name"];
   this.state = {
     power: false,
     speed: 0,
@@ -63,7 +64,7 @@ FanAccessory.prototype.setOn = function(value, callback) {
     this.log('Power Button: ' + value);
     this.state.power = value;
     this.setFanState(this.state, callback);
-  } 
+  }
   else {
     callback(null);
   }
@@ -90,34 +91,34 @@ FanAccessory.prototype.setDirection = function(value, callback) {
   if (this.state.direction != value) {
     this.state.direction = value;
     this.setFanState2(this.state, callback);
-  } 
+  }
   else {
     callback(null);
   }
 }
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setFanState = function(state, callback) {
-  var cmd;
+  var signal_ID;
   if (state.power) {
     if      (state.speed == 33) {
-      cmd = this.middle_cmd;
+      signal_ID = this.middle_signal_ID;
       this.log('Power: ' + state.power + '  FANSpeed: LOW(' + state.speed + ')');
     }
     else if (state.speed == 66) {
-      cmd = this.middle_cmd;
+      signal_ID = this.middle_signal_ID;
       this.log('Power: ' + state.power + '  FANSpeed: MIDDLE(' + state.speed + ')');
     }
     else if (state.speed == 99) {
-      cmd = this.high_cmd;
+      signal_ID = this.high_signal_ID;
       this.log('Power: ' + state.power + '  FANSpeed: HIGH(' + state.speed + ')');
     }
   }
   else {
-      cmd = this.off_cmd;
+      signal_ID = this.off_signal_ID;
       this.log('Power: ' + state.power);
   }
 
-  this.cmdRequest(cmd, function(error, stdout, stderr) {
+  this.httpRequest(signal_ID, function(error, stdout, stderr) {
     if (error) {
       this.log('Function Failed', error);
       callback(error);
@@ -131,17 +132,17 @@ FanAccessory.prototype.setFanState = function(state, callback) {
 
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setFanState2 = function(state, callback) {
-  var cmd;
+  var signal_ID;
   if (state.direction == 0) {
-      cmd = this.clockwise_cmd;
+      signal_ID = this.clockwise_signal_ID;
       this.log('Direction: CLOCKWISE!');
   }
   else {
-      cmd = this.c_clockwise_cmd;
+      signal_ID = this.c_clockwise_signal_ID;
       this.log('Direction: COUNTER CLOCKWISE!');
   }
 
-  this.cmdRequest(cmd, function(error, stdout, stderr) {
+  this.httpRequest(signal_ID, function(error, stdout, stderr) {
     if (error) {
       this.log('Function Failed', error);
       callback(error);
@@ -154,8 +155,16 @@ FanAccessory.prototype.setFanState2 = function(state, callback) {
 }
 
 //------------------------------------------------------------------------------
-FanAccessory.prototype.cmdRequest = function(cmd, callback) {
-  exec(cmd, function(error, stdout, stderr) {
-	  callback(error, stdout, stderr)
-  })
+FanAccessory.prototype.httpRequest = function(signal_ID, callback) {
+  request(
+    {
+      url: 'https://api.nature.global/1/signals/' + signal_ID + '/send',
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Authorization': 'Bearer ' + this.access_tokens
+      },
+      json: true
+    }
+  )
 }
