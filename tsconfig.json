@@ -1,13 +1,14 @@
     "accessories": [
         {
-            "accessory": "cmd-fan",
+            "accessory": "NatureRemoFan",
             "name": "シーリングファン",
-            "high_cmd": "/****pass****/high_cmd.sh",
-            "middle_cmd": "/****pass****/middle_cmd.sh",
-            "low_cmd": "/****pass****/low_cmd.sh",
-            "off_cmd": "/****pass****/off_cmd.sh",
-            "clockwise_cmd": "/****pass****/clockwise_cmd.sh",
-            "c_clockwise_cmd": "/****pass****/c_clockwise_cmd.sh"
+            "access_tokens": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            "high_signal_ID": "XXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            "middle_signal_ID": "XXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            "low_signal_ID": "XXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            "off_signal_ID": "XXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            "clockwise_signal_ID": "XXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            "c_clockwise_signal_ID": "XXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         },
         {
           ～
