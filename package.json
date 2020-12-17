@@ -1,9 +1,9 @@
 {
-  "name": "homebridge-cmd-fan",
-  "version": "0.0.1",
+  "name": "homebridge-nature-remo-cloud-fan",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mizuka-ninomae/homebridge-cmd-fan.git"
+    "url": "git://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan.git"
   },
   "main": "index.js",
   "keywords": [
@@ -12,5 +12,8 @@
   "engines": {
     "node": ">=10.17.0",
     "homebridge": ">=1.0.0"
+  },
+  "dependencies": {
+    "request": "^2.74.0"
   }
 }
