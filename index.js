@@ -1,5 +1,5 @@
-var Service, Characteristic;
-var request = require('request');
+let Service, Characteristic;
+let request    = require('request');
 
 module.exports = function(homebridge){
   Service        = homebridge.hap.Service;
@@ -96,7 +96,7 @@ FanAccessory.prototype.setDirection = function(value, callback) {
 }
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setFanState = function(state, callback) {
-  var signal_ID;
+  let signal_ID;
   if (state.power) {
     if      (state.speed == 33) {
       signal_ID = this.middle_signal_ID;
@@ -130,7 +130,7 @@ FanAccessory.prototype.setFanState = function(state, callback) {
 
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setFanState2 = function(state, callback) {
-  var signal_ID;
+  let signal_ID;
   if (state.direction == 0) {
       signal_ID = this.clockwise_signal_ID;
       this.log('Direction: CLOCKWISE!');
