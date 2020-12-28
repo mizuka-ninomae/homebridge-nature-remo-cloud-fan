@@ -43,15 +43,17 @@ function FanAccessory(log, config) {
      minStep:  33,
   })
   .on('set', this.setSpeed.bind(this))
+
+  if(this.Use_Counter_Clockwise) {
+    this.fanService
+    .getCharacteristic(Characteristic.RotationDirection)
+    .on('set', this.setDirection.bind(this));
+  }
 }
 
 //------------------------------------------------------------------------------
 FanAccessory.prototype.getServices = function() {
-
-  fanService
-    .getCharacteristic(Characteristic.RotationDirection)
-    .on('set', this.setDirection.bind(this));
-  return [fanService];
+  return [this.informationService, this.fanService];
 }
 
 //------------------------------------------------------------------------------
