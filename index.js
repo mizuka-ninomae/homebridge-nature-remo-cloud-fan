@@ -44,7 +44,7 @@ function FanAccessory(log, config) {
   })
   .on('set', this.setSpeed.bind(this))
 
-  if(this.Use_Counter_Clockwise) {
+  if (this.Use_Counter_Clockwise) {
     this.fanService
     .getCharacteristic(Characteristic.RotationDirection)
     .on('set', this.setDirection.bind(this));
