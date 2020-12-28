@@ -27,9 +27,9 @@ function FanAccessory(log, config) {
   this.fanService            = new Service.Fan(this.name);
 
   this.informationService
-  .setCharacteristic(Characteristic.Manufacturer, "fan Manufacturer")
-  .setCharacteristic(Characteristic.Model, "fan Model")
-  .setCharacteristic(Characteristic.SerialNumber, "fan Serial Number");
+  .setCharacteristic(Characteristic.Manufacturer, "NatureRemo-FAN Manufacturer")
+  .setCharacteristic(Characteristic.Model, "NatureRemo-FAN Model")
+  .setCharacteristic(Characteristic.SerialNumber, "NatureRemo-FAN Serial Number");
 
   this.fanService
   .getCharacteristic(Characteristic.On)
