@@ -23,8 +23,8 @@ function FanAccessory(log, config) {
     speed: 0,
   };
 
-  this.informationService = new Service.AccessoryInformation();
-  this.fanService         = new Service.Fan(this.name);
+  this.informationService    = new Service.AccessoryInformation();
+  this.fanService            = new Service.Fan(this.name);
 
   this.informationService
   .setCharacteristic(Characteristic.Manufacturer, "fan Manufacturer")
