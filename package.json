@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan.git"
+    "url": "git+https://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan.git"
   },
   "main": "index.js",
   "keywords": [
     "homebridge-plugin",
-    "FAN",
+    "homebridge-nature-remo-cloud-fan",
+    "homebridge-nature-remo-cloud",
+    "cloud",
+    "fan",
+    "nature-remo",
     "NatureRemo"
   ],
   "engines": {
@@ -19,13 +23,11 @@
     "lint": "echo \"Warning: lint is not used\" && exit 0",
     "build": "echo \"Warning: build is not used\" && exit 0"
   },
-  "repository": {
-      "type": "git",
-      "url": "git+https://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan.git"
-  },
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-      "url": "https://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan/issues"
+    "url": "https://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan/issues"
   },
-  "homepage": "https://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan#readme"
+  "homepage": "https://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan#readme",
+  "description": "",
+  "author": "mizuka-ninomae"
 }
