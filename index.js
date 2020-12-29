@@ -118,7 +118,7 @@ FanAccessory.prototype.setFanState = function(state, callback) {
       this.log('Power: ' + state.power);
   }
 
-  this.httpRequest(signal_ID, function(error, stdout, stderr) {
+  this.cmdRequest(signal_ID, function(error, stdout, stderr) {
     if (error) {
       this.log('Function Failed', error);
       callback(error);
@@ -142,7 +142,7 @@ FanAccessory.prototype.setFanState2 = function(state, callback) {
       this.log('Direction: COUNTER CLOCKWISE!');
   }
 
-  this.httpRequest(signal_ID, function(error, stdout, stderr) {
+  this.cmdRequest(signal_ID, function(error, stdout, stderr) {
     if (error) {
       this.log('Function Failed', error);
       callback(error);
