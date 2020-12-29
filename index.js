@@ -20,6 +20,7 @@ function FanAccessory(log, config) {
     this.clockwise_signal_ID   = config["clockwise_signal_ID"];
     this.c_clockwise_signal_ID = config["c_clockwise_signal_ID"];
   }
+  this.language                = config["language"] || "en";
   this.state = {
     power: false,
     speed: 0,
@@ -61,7 +62,12 @@ FanAccessory.prototype.getServices = function() {
 //------------------------------------------------------------------------------
 FanAccessory.prototype.setOn = function(value, callback) {
   if (this.state.power != value) {
-    this.log('Power Button: ' + value);
+    if      (this.language == 'en') {
+      this.log(' <<<< [Power Button: ' + value + ']');
+    }
+    else if (this.language == 'jp') {
+      this.log(' <<<< [電源ボタン: ' + value + ']');
+    }
     this.state.power = value;
     this.setFanState(this.state, callback);
   }
@@ -102,15 +108,30 @@ FanAccessory.prototype.setFanState = function(state, callback) {
   if (state.power) {
     if      (state.speed == 33) {
       signal_ID = this.middle_signal_ID;
-      this.log('Power: ' + state.power + '  FANSpeed: LOW(' + state.speed + ')');
+      if      (this.language == 'en') {
+        this.log(' <<<< [Power: ' + state.power + ']  [FANSpeed: LOW(' + state.speed + '%)]');
+      }
+      else if (this.language == 'jp') {
+        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 低(' + state.speed + '%)]');
+      }
     }
     else if (state.speed == 66) {
       signal_ID = this.middle_signal_ID;
-      this.log('Power: ' + state.power + '  FANSpeed: MIDDLE(' + state.speed + ')');
+      if      (this.language == 'en') {
+        this.log(' <<<< [Power: ' + state.power + ']  [FANSpeed: MIDDLE(' + state.speed + '%)]');
+      }
+      else if (this.language == 'jp') {
+        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 中(' + state.speed + '%)]');
+      }
     }
     else if (state.speed == 99) {
       signal_ID = this.high_signal_ID;
-      this.log('Power: ' + state.power + '  FANSpeed: HIGH(' + state.speed + ')');
+      if      (this.language == 'en') {
+        this.log(' <<<< [Power: ' + state.power + ']  [FANSpeed: HIGH(' + state.speed + '%)]');
+      }
+      else if (this.language == 'jp') {
+        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 高(' + state.speed + '%)]');
+      }
     }
   }
   else {
@@ -124,7 +145,6 @@ FanAccessory.prototype.setFanState = function(state, callback) {
       callback(error);
     }
     else {
-      this.log('Function Succeeded!');
       callback();
     }
   }.bind(this));
@@ -134,12 +154,22 @@ FanAccessory.prototype.setFanState = function(state, callback) {
 FanAccessory.prototype.setFanState2 = function(state, callback) {
   let signal_ID;
   if (state.direction == 0) {
-      signal_ID = this.clockwise_signal_ID;
-      this.log('Direction: CLOCKWISE!');
+    signal_ID = this.clockwise_signal_ID;
+    if      (this.language == 'en') {
+      this.log(' <<<< [Direction: CLOCKWISE]');
+    }
+    else if (this.language == 'jp') {
+      this.log(' <<<< [回転方向: 時計回り（冬用上向き）]');
+    }
   }
   else {
-      signal_ID = this.c_clockwise_signal_ID;
-      this.log('Direction: COUNTER CLOCKWISE!');
+    signal_ID = this.c_clockwise_signal_ID;
+    if      (this.language == 'en') {
+      this.log(' <<<< [Direction: COUNTER CLOCKWISE]');
+    }
+    else if (this.language == 'jp') {
+      this.log(' <<<< [回転方向: 反時計回り（夏用下向き）]');
+    }
   }
 
   this.cmdRequest(signal_ID, function(error, stdout, stderr) {
@@ -148,7 +178,6 @@ FanAccessory.prototype.setFanState2 = function(state, callback) {
       callback(error);
     }
     else {
-      this.log('Function Succeeded!');
       callback();
     }
   }.bind(this));
