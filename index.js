@@ -1,5 +1,5 @@
 let Service, Characteristic;
-let request    = require('request');
+let exec         = require("child_process").exec;
 
 module.exports = function(homebridge){
   Service        = homebridge.hap.Service;
@@ -8,23 +8,25 @@ module.exports = function(homebridge){
 }
 
 function FanAccessory(log, config) {
-  this.log                   = log;
-  this.name                  = config["name"];
-  this.access_tokens         = config["access_tokens"];
-  this.high_signal_ID        = config["high_signal_ID"];
-  this.middle_signal_ID      = config["middle_signal_ID"];
-  this.low_signal_ID         = config["low_signal_ID"];
-  this.off_signal_ID         = config["off_signal_ID"];
-  this.clockwise_signal_ID   = config["clockwise_signal_ID"];
-  this.c_clockwise_signal_ID = config["c_clockwise_signal_ID"];
-  this.Use_Counter_Clockwise = config["Use_Counter_Clockwise"] || false;
+  this.log                     = log;
+  this.name                    = config["name"];
+  this.access_tokens           = config["access_tokens"];
+  this.high_signal_ID          = config["high_signal_ID"];
+  this.middle_signal_ID        = config["middle_signal_ID"];
+  this.low_signal_ID           = config["low_signal_ID"];
+  this.off_signal_ID           = config["off_signal_ID"];
+  this.Use_Counter_Clockwise   = config["Use_Counter_Clockwise"] || false;
+  if (this.Use_Counter_Clockwise) {
+    this.clockwise_signal_ID   = config["clockwise_signal_ID"];
+    this.c_clockwise_signal_ID = config["c_clockwise_signal_ID"];
+  }
   this.state = {
     power: false,
     speed: 0,
   };
 
-  this.informationService    = new Service.AccessoryInformation();
-  this.fanService            = new Service.Fan(this.name);
+  this.informationService      = new Service.AccessoryInformation();
+  this.fanService              = new Service.Fan(this.name);
 
   this.informationService
   .setCharacteristic(Characteristic.Manufacturer, "NatureRemo-FAN Manufacturer")
@@ -153,16 +155,15 @@ FanAccessory.prototype.setFanState2 = function(state, callback) {
 }
 
 //------------------------------------------------------------------------------
-FanAccessory.prototype.httpRequest = function(signal_ID, callback) {
-  request(
-    {
-      url: 'https://api.nature.global/1/signals/' + signal_ID + '/send',
-      method: 'POST',
-      headers: {
-        'accept': 'application/json',
-        'Authorization': 'Bearer ' + this.access_tokens
-      },
-      json: true
-    }
-  )
+FanAccessory.prototype.cmdRequest = function(signal_ID, callback) {
+  let url       = ' "https://api.nature.global/1/signals/' + signal_ID + '/send"';
+  let param_1   = 'curl -X POST';
+  let param_2   = ' -H "accept":"application/json"';
+  let param_3   = ' -k --header "Authorization":"Bearer';
+  let param_4   = ' ' + this.access_tokens + '"';
+  let param_all = param_1 + url + param_2 + param_3 + param_4;
+
+  exec(param_all, function(error, stdout, stderr) {
+	  callback(error, stdout, stderr)
+  })
 }
