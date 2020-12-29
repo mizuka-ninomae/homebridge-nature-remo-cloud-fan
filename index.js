@@ -8,26 +8,24 @@ module.exports = function(homebridge){
 }
 
 function FanAccessory(log, config) {
-  this.log                     = log;
-  this.name                    = config["name"];
-  this.access_tokens           = config["access_tokens"];
-  this.high_signal_ID          = config["high_signal_ID"];
-  this.middle_signal_ID        = config["middle_signal_ID"];
-  this.low_signal_ID           = config["low_signal_ID"];
-  this.off_signal_ID           = config["off_signal_ID"];
-  this.Use_Counter_Clockwise   = config["Use_Counter_Clockwise"] || false;
-  if (this.Use_Counter_Clockwise) {
-    this.clockwise_signal_ID   = config["clockwise_signal_ID"];
-    this.c_clockwise_signal_ID = config["c_clockwise_signal_ID"];
-  }
-  this.language                = config["language"] || "en";
+  this.log                   = log;
+  this.name                  = config["name"];
+  this.access_tokens         = config["access_tokens"];
+  this.high_signal_ID        = config["high_signal_ID"];
+  this.middle_signal_ID      = config["middle_signal_ID"];
+  this.low_signal_ID         = config["low_signal_ID"];
+  this.off_signal_ID         = config["off_signal_ID"];
+  this.Use_Counter_Clockwise = config["Use_Counter_Clockwise"] || false;
+　this.clockwise_signal_ID   = config["clockwise_signal_ID"];
+  this.c_clockwise_signal_ID = config["c_clockwise_signal_ID"];
+  this.language              = config["language"] || "en";
   this.state = {
     power: false,
     speed: 0,
   };
 
-  this.informationService      = new Service.AccessoryInformation();
-  this.fanService              = new Service.Fan(this.name);
+  this.informationService    = new Service.AccessoryInformation();
+  this.fanService            = new Service.Fan(this.name);
 
   this.informationService
   .setCharacteristic(Characteristic.Manufacturer, "NatureRemo-FAN Manufacturer")
@@ -47,11 +45,9 @@ function FanAccessory(log, config) {
   })
   .on('set', this.setSpeed.bind(this))
 
-  if (this.Use_Counter_Clockwise) {
-    this.fanService
-    .getCharacteristic(Characteristic.RotationDirection)
-    .on('set', this.setDirection.bind(this));
-  }
+  this.fanService
+  .getCharacteristic(Characteristic.RotationDirection)
+  .on('set', this.setDirection.bind(this));
 }
 
 //------------------------------------------------------------------------------
@@ -112,7 +108,7 @@ FanAccessory.prototype.setFanState = function(state, callback) {
         this.log(' <<<< [Power: ' + state.power + ']  [FANSpeed: LOW(' + state.speed + '%)]');
       }
       else if (this.language == 'jp') {
-        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 低(' + state.speed + '%)]');
+        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 低(' + state.speed + '％)]');
       }
     }
     else if (state.speed == 66) {
@@ -121,7 +117,7 @@ FanAccessory.prototype.setFanState = function(state, callback) {
         this.log(' <<<< [Power: ' + state.power + ']  [FANSpeed: MIDDLE(' + state.speed + '%)]');
       }
       else if (this.language == 'jp') {
-        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 中(' + state.speed + '%)]');
+        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 中(' + state.speed + '％)]');
       }
     }
     else if (state.speed == 99) {
@@ -130,13 +126,18 @@ FanAccessory.prototype.setFanState = function(state, callback) {
         this.log(' <<<< [Power: ' + state.power + ']  [FANSpeed: HIGH(' + state.speed + '%)]');
       }
       else if (this.language == 'jp') {
-        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 高(' + state.speed + '%)]');
+        this.log(' <<<< [電源: ' + state.power + ']  [スピード: 高(' + state.speed + '％)]');
       }
     }
   }
   else {
       signal_ID = this.off_signal_ID;
-      this.log('Power: ' + state.power);
+      if      (this.language == 'en') {
+        this.log('[Power: ' + state.power + ']');
+      }
+      else if (this.language == 'jp') {
+        this.log('[電源: ' + state.power + ']');
+    }
   }
 
   this.cmdRequest(signal_ID, function(error, stdout, stderr) {
