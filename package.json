@@ -16,7 +16,6 @@
   "dependencies": {
     "request": "^2.74.0"
   },
-  {
   "scripts": {
     "lint": "eslint *.js"
   }
