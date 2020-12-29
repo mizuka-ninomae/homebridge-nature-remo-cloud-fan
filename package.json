@@ -8,7 +8,11 @@
   "main": "index.js",
   "keywords": [
     "homebridge-plugin",
-    "FAN",
+    "homebridge-nature-remo-cloud-fan",
+    "homebridge-nature-remo-cloud",
+    "cloud",
+    "fan",
+    "nature-remo",
     "NatureRemo"
   ],
   "engines": {
