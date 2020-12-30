@@ -10,7 +10,7 @@ module.exports = function(homebridge){
 function FanAccessory(log, config) {
   this.log                   = log;
   this.name                  = config["name"];
-  this.access_tokens         = config["access_tokens"];
+  this.access_token          = config["access_token"];
   this.high_signal_ID        = config["high_signal_ID"];
   this.middle_signal_ID      = config["middle_signal_ID"];
   this.low_signal_ID         = config["low_signal_ID"];
@@ -190,7 +190,7 @@ FanAccessory.prototype.cmdRequest = function(signal_ID, callback) {
   let param_1   = 'curl -X POST';
   let param_2   = ' -H "accept":"application/json"';
   let param_3   = ' -k --header "Authorization":"Bearer';
-  let param_4   = ' ' + this.access_tokens + '"';
+  let param_4   = ' ' + this.access_token + '"';
   let param_all = param_1 + url + param_2 + param_3 + param_4;
 
   exec(param_all, function(error, stdout, stderr) {
