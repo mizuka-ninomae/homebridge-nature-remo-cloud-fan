@@ -28,6 +28,6 @@
     "url": "https://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan/issues"
   },
   "homepage": "https://github.com/mizuka-ninomae/homebridge-nature-remo-cloud-fan#readme",
-  "description": "",
+  "description": "homubridge用 NatureRemo Cloud API特化型FAN制御プラグイン （NatureRemo Cloud API specialized FAN control plugin）",
   "author": "mizuka-ninomae"
 }

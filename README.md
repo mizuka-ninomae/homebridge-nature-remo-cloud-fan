@@ -1,5 +1,5 @@
 
-homubridge用 NatureRemo Cloud API特化型FAN制御プラグイン （）
+homubridge用 NatureRemo Cloud API特化型FAN制御プラグイン （NatureRemo Cloud API specialized FAN control plugin）
 
 Homebridge：  https：//github.com/nfarina/homebridge
 
@@ -37,6 +37,7 @@ config.json 記入例
 * `name` → お好みに（To your liking）
 * `access_token` → 公式HPより取得（Obtained from the official website）
 * `~signal_ID` → 公式HPより取得（Obtained from the official website）それぞれの場合のsignal IDを記入してください。（Enter the signal ID for each case）
+* `language` → en（ENGLISH:[Default]）、jp（JAPANESE:ログの高中低、時計回り、反時計回りの表示が日本語になってメモが付く）
 
 公式HP（official website）https://developer.nature.global/
 access token発行ページ（access token issuing site）https://home.nature.global/
